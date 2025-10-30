@@ -841,6 +841,19 @@ class ControllerSettingSetting extends Controller {
 			$data['config_seo_url_slash'] = $this->config->get('config_seo_url_slash');
 		}
 
+		// НОВЫЕ НАСТРОЙКИ СЛЭША ДЛЯ КАТЕГОРИЙ И ТОВАРОВ
+		if (isset($this->request->post['config_seo_url_slash_category'])) {
+			$data['config_seo_url_slash_category'] = $this->request->post['config_seo_url_slash_category'];
+		} else {
+			$data['config_seo_url_slash_category'] = $this->config->get('config_seo_url_slash_category');
+		}
+
+		if (isset($this->request->post['config_seo_url_slash_product'])) {
+			$data['config_seo_url_slash_product'] = $this->request->post['config_seo_url_slash_product'];
+		} else {
+			$data['config_seo_url_slash_product'] = $this->config->get('config_seo_url_slash_product');
+		}
+
 		if (isset($this->request->post['config_seo_canonical_first'])) {
 			$data['config_seo_canonical_first'] = $this->request->post['config_seo_canonical_first'];
 		} else {

@@ -1052,22 +1052,48 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_seo_url_slash }}">{{ entry_seo_url_slash }}</span></label>
                   <div class="col-sm-10">
-                    <label class="radio-inline"> {% if config_seo_url_slash %}
-                      <input type="radio" name="config_seo_url_slash" value="1" checked="checked" />
+                    <label class="radio-inline"> 
+                      <input type="radio" name="config_seo_url_slash" value="1" {% if config_seo_url_slash %}checked="checked"{% endif %} /> 
                       {{ text_yes }}
-                      {% else %}
-                      <input type="radio" name="config_seo_url_slash" value="1" />
-                      {{ text_yes }}
-                      {% endif %} </label>
-                    <label class="radio-inline"> {% if not config_seo_url_slash %}
-                      <input type="radio" name="config_seo_url_slash" value="0" checked="checked" />
+                    </label>
+                    <label class="radio-inline"> 
+                      <input type="radio" name="config_seo_url_slash" value="0" {% if not config_seo_url_slash %}checked="checked"{% endif %} /> 
                       {{ text_no }}
-                      {% else %}
-                      <input type="radio" name="config_seo_url_slash" value="0" />
-                      {{ text_no }}
-                      {% endif %} </label>
+                    </label>
                   </div>
                 </div>
+                
+                <!-- НОВЫЕ НАСТРОЙКИ СЛЭША ДЛЯ КАТЕГОРИЙ И ТОВАРОВ -->
+                <div id="additional-slash-settings" style="{% if not config_seo_url_slash %}display: none;{% endif %}">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_seo_url_slash_category }}">{{ entry_seo_url_slash_category }}</span></label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="config_seo_url_slash_category" value="1" {% if config_seo_url_slash_category %}checked="checked"{% endif %} /> 
+                        {{ text_yes }}
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="config_seo_url_slash_category" value="0" {% if not config_seo_url_slash_category %}checked="checked"{% endif %} /> 
+                        {{ text_no }}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_seo_url_slash_product }}">{{ entry_seo_url_slash_product }}</span></label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="config_seo_url_slash_product" value="1" {% if config_seo_url_slash_product %}checked="checked"{% endif %} /> 
+                        {{ text_yes }}
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="config_seo_url_slash_product" value="0" {% if not config_seo_url_slash_product %}checked="checked"{% endif %} /> 
+                        {{ text_no }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <!-- КОНЕЦ НОВЫХ НАСТРОЕК -->
+
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ entry_seo_url_mode }}</label>
                   <div class="col-sm-10">
@@ -1304,5 +1330,30 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
-//--></script></div>
-{{ footer }} 
+//--></script>
+  <script type="text/javascript">
+// Управление видимостью дополнительных настроек слэша
+$(document).ready(function() {
+    function toggleSlashSettings() {
+        if ($('input[name="config_seo_url_slash"]:checked').val() == '1') {
+            $('#additional-slash-settings').show();
+            $('input[name="config_seo_url_slash_category"]').prop('disabled', false);
+            $('input[name="config_seo_url_slash_product"]').prop('disabled', false);
+        } else {
+            $('#additional-slash-settings').hide();
+            $('input[name="config_seo_url_slash_category"]').prop('disabled', true);
+            $('input[name="config_seo_url_slash_product"]').prop('disabled', true);
+        }
+    }
+
+    // Инициализация при загрузке
+    toggleSlashSettings();
+
+    // Обработчик изменения основной настройки слэша
+    $('input[name="config_seo_url_slash"]').change(function() {
+        toggleSlashSettings();
+    });
+});
+</script>
+</div>
+{{ footer }}
